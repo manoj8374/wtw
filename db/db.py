@@ -13,7 +13,6 @@ session = Session()
 class wardrobe(Base):
     __tablename__ = 'wardrobe'
 
-    # id = Column(Integer, primary_key=True)
     name = Column(String, primary_key=True)
     occupation = Column(String)
     gender = Column(String)
@@ -22,11 +21,15 @@ class wardrobe(Base):
     others = Column(VARCHAR)
 
 def readdata():
-    user = session.query(wardrobe).filter_by(name="Pavan").first()
-    if user:
-        return user
-    else:
-        return "Some Error occourred"
+    try:
+        user = session.query(wardrobe).filter_by(name="Pavan").first()
+        if user:
+            return user
+        else:
+            session.rollback()
+            return "Some Error occourred"
+    except:
+        session.rollback()
 
 def updatewardrobe(top, bottom, others):
     user = session.query(wardrobe).filter_by(name="Pavan").first()
@@ -35,6 +38,6 @@ def updatewardrobe(top, bottom, others):
         user.bottom = bottom
         user.others = others
         session.commit()
-        return True
+        return "True"
     else:
         session.rollback()

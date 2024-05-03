@@ -33,7 +33,6 @@ def suggest():
         output = output.replace("**","")
     return render_template('output.html', suggestions=output)     
 
-
 @app.route('/updatewardrobe', methods=['POST','GET'])
 def updatewardrobe():
     if request.method == 'POST':
@@ -41,7 +40,7 @@ def updatewardrobe():
         bottom = request.form.get('bottom')
         others = request.form.get('others')
         flag=db.updatewardrobe(top, bottom, others)
-        if flag == True:
+        if flag == "True":
             return render_template('index.html', output="Wardrobe Updated Successfully")
         else:
             return render_template('index.html', output="Some error occoured. Kindly try after some time.")
