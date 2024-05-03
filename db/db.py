@@ -22,11 +22,15 @@ class wardrobe(Base):
     others = Column(VARCHAR)
 
 def readdata():
-    user = session.query(wardrobe).filter_by(name="Pavan").first()
-    if user:
-        return user
-    else:
-        return "Some Error occourred"
+    try:
+        user = session.query(wardrobe).filter_by(name="Pavan").first()
+        if user:
+            return user
+        else:
+            session.rollback()
+            return "Some Error occourred"
+    except:
+        session.rollback()
 
 def updatewardrobe(top, bottom, others):
     user = session.query(wardrobe).filter_by(name="Pavan").first()
