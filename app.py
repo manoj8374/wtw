@@ -1,51 +1,44 @@
-from flask import Flask, render_template, request, flash, jsonify
-from db import db
-import google.generativeai as genai
+from sqlalchemy import INTEGER, Integer, create_engine, Column, String, VARCHAR, Boolean
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 
-app = Flask(__name__)
+Base = declarative_base()
+Base2 = declarative_base()
 
-@app.route('/')
-def index():
-    data = db.readdata()
-    return render_template("index.html",name=data.name, top=data.top, bottom=data.bottom, others=data.others)
+engine = create_engine("mysql://ucqojmslvkutogcc:woxPxWyuaVzbVYjwMv0r@bfr7xlwn6iqg6qgeievt-mysql.services.clever-cloud.com:3306/bfr7xlwn6iqg6qgeievt")
+Base.metadata.create_all(bind=engine)
+Session = sessionmaker(bind=engine)
+session = Session()
 
-def execute_prompt(prompt):
-    api_key="AIzaSyB1gjKQMpLKeL6ED2Pyqlry8OWZHlgfxdw"
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel('gemini-pro')
-    response = model.generate_content(prompt)
-    return response.text
+class wardrobe(Base):
+    __tablename__ = 'wardrobe'
 
-@app.route('/suggest', methods=['GET','POST'])
-def suggest():
-    data = db.readdata()
-    output = "" 
-    if request.method == 'POST':
-        occasion = request.form.get('occasion')
-        style = request.form.get('style')
-        colleaguedetails = request.form.get('colleaguedetails')
-        otherinfo = request.form.get('otherinfo')
-        if otherinfo == "":
-            prompt = f"Hey, I am {data.name} and a {data.occupation} by profession,  I am going out with one of my colleagues whose information is provided here: {colleaguedetails}. I have these clothes in my inventory: {data.top} for topwear, {data.bottom} for bottomwear and {data.others} as shoes and accessories. I am going to a {occasion} along with my colleague. Suggest me the best outfit with accessories and shoes for me based on my inventory which I provided to you. I am willing to wear {style} style clothes."
+    # id = Column(Integer, primary_key=True)
+    name = Column(String, primary_key=True)
+    occupation = Column(String)
+    gender = Column(String)
+    top = Column(VARCHAR)
+    bottom = Column(VARCHAR)
+    others = Column(VARCHAR)
+
+def readdata():
+    try:
+        user = session.query(wardrobe).filter_by(name="Pavan").first()
+        if user:
+            return user
         else:
-            prompt = f"Hey, I am {data.name} and a {data.occupation} by profession,  I am going out with one of my colleagues whose information is provided here: {colleaguedetails}. I have these clothes in my inventory: {data.top} for topwear, {data.bottom} for bottomwear and {data.others} as shoes and accessories. I am going to a {occasion} along with my colleague. Suggest me the best outfit with accessories and shoes for me based on my inventory which I provided to you. I am willing to wear {style} style clothes. Here is some other important information which you need to take care of while suggesting me the outfits: {otherinfo}."
-        output = execute_prompt(prompt=prompt)
-        output = output.replace("**","")
-    return render_template('output.html', suggestions=output)     
+            session.rollback()
+            return "Some Error occourred"
+    except:
+        session.rollback()
 
-
-@app.route('/updatewardrobe', methods=['POST','GET'])
-def updatewardrobe():
-    if request.method == 'POST':
-        top = request.form.get('top')
-        bottom = request.form.get('bottom')
-        others = request.form.get('others')
-        flag=db.updatewardrobe(top, bottom, others)
-        if flag == True:
-            return render_template('index.html', output="Wardrobe Updated Successfully")
-        else:
-            return render_template('index.html', output="Some error occoured. Kindly try after some time.")
-    return render_template("index.html")
-
-if __name__=='__main__':
-    app.run(debug=True, host='0.0.0.0')
+def updatewardrobe(top, bottom, others):
+    user = session.query(wardrobe).filter_by(name="Pavan").first()
+    if user:
+        user.top = top
+        user.bottom = bottom
+        user.others = others
+        session.commit()
+        return True
+    else:
+        session.rollback()
