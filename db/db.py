@@ -38,4 +38,3 @@ def updatewardrobe(top, bottom, others):
         return True
     else:
         session.rollback()
-        return False
