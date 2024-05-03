@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+
+<body>
+    <div id="homeSection" class="navBar">
+        <div class="flex justify-between">
+            <div>
+                <img src="" />
+            </div>
+            <!-- <div>
+                <button id="wadrobeButton" class="bg-[#cc226c] mr-3 mt-2 p-3 rounded-xl text-[#FFFFFF] font-medium"> My Wardrobe </button>
+            </div> -->
+        </div>
+        <div>
+            <div class="d-flex justify-center mt-5 pt-5">
+                <img src="https://imagetolink.com/ib/sYwQEzvIYZ.png" alt="sYwQEzvIYZ" />
+            </div>
+            <h1 class="bg-[#] text-5xl text-[#0F0E0E] text-center mt-5 font-bold p-2"> Elevate your S<span class="bg-[#cc226c] text-[#FFFFFF]">tyle </span>&nbspand C<span class="bg-[#cc226c] text-[#FFFFFF]">onfidence &nbsp</span> </h1>
+            <div class="flex justify-center mt-3">
+                <button class="bg-[#cc226c] mr-3 mt-5 p-3 rounded-xl text-[#FFFFFF] font-medium" id="styleMeNow"> Style me now </button>
+                <button id="wadrobeButton" class="bg-[#cc226c] mr-3 mt-5 p-3 rounded-xl text-[#FFFFFF] font-medium"> My Wardrobe </button>
+            </div>
+        </div>
+    </div>
+
+<div id="formPart" class="formSection">
+    <form  action="/suggest" method="post" enctype="multipart/form-data">
+        
+        <div class="mt-3 ml-5 rounded-xl bg-[#cc226c] w-36 p-3 text-[white] font-medium">
+            <h1 class="">Let's Get Styled</h1>
+        </div>
+        <div class="ml-5 text-[#cc226c] p-3 font-bold">
+            <p class="suggestions_button text-left">Be precise while you input</p>
+        </div>
+        <div class="inputContainerA mt-2 p-2">
+            <h3 class="inputHeadingA mt-2">What's the O<span class="bg-[#cc226c] text-[#FFFFFF]">ccassion </span>&nbsp you're going to?</h3>
+            <input class="inputStyling mt-3 mb-3" name="occasion" type="text" placeholder="Write an Occasion" />
+        </div>
+        <div class="inputContainerA radioContainer mt-5 p-2">
+
+            <h1 class="inputHeadingA pt-1 mt-2">Select Your P<span class="bg-[#cc226c] text-[#FFFFFF]">referred </span>&nbsp S<span class="bg-[#cc226c] text-[#FFFFFF]">tyle. </span>&nbsp</h1>
+            <div class="p-2">
+                <input type="radio" name="style" value="Casual" />
+                <label for="Casual" class="mr-2">Casual</label>
+                <input type="radio" name="style" value="Formal" />
+                <label for="Formal" class="mr-2">Formal</label>
+                <input type="radio" name="style" value="Ethinic Wear" />
+                <label for="Ethinic Wear" class="mr-2">Ethinic Wear</label>
+                <input type="radio" name="style" value="Street" />
+                <label for="Street">Street</label>
+            </div>
+
+
+        </div>
+
+        <div class="inputContainerA mt-5 p-2">
+            <h3 class="inputHeadingA mt-2 ">W<span class="bg-[#cc226c] text-[#FFFFFF]">hom </span>&nbsp are you going with and W<span class="bg-[#cc226c] text-[#FFFFFF]">hat </span>&nbsp are their Outfits?</h3>
+            <input class="inputStyling mb-3" name="colleaguedetails" type="text" placeholder="Whom are you going with?" />
+        </div>
+        <div class="inputContainerA mt-5 p-2">
+            <h3 class="inputHeadingA mt-3">Anything you want us to Know?</h3>
+            <input class="inputStyling mb-3" name="otherinfo" type="text" placeholder="" />
+        </div>
+        <div class="flex justify-center mt-5 mb-5 mr-3">
+            <button class="bg-[#cc226c] mt-2 ml-3 p-3 rounded-xl text-[#FFFFFF] font-medium" id="back" >Submit</button>
+            <button class="mt-2 ml-3 rounded-xl bg-[#cc226c] w-36 p-3 text-[white] font-medium" id="SubmitTheForm">Return to Home</button>
+        </div>
+    </form>
+</div>
+
+    <div class="hideSection" id="wadrobeSection">
+        <form action="/updatewardrobe" method="post" enctype="multipart/form-data">
+        <div class="mt-3 ml-5 rounded-xl bg-[#cc226c] w-36 p-3 text-[white] font-medium">
+            <h1 class="suggestions_button text-center">My Wardrobe</h1>
+        </div>
+
+        <h1 class="text-center mt-5 text-xl font-bold p-2 text-[#0F0E0E]">Hey <span class="text-[#cc226c]">{{name}}</span>, nice to see you again.</h1>
+
+<!-- 
+        <div class="ml-5 text-[#cc226c] p-3 font-bold">
+            <p class="suggestions_button text-left">Add proper details about your outfits as possible. It will help to get better suggestions.</p>
+            <p class="suggestions_button text-left">Follow the examples below.</p>
+        </div> -->
+        
+
+        <div class="text-center">
+            <h3 class="suggestions_button ml-4 mt-4 text-[black] font-bold text-2xl">Top Wear</h3>
+            <p class="suggestions_button text-left">{{top}}</p>
+        </div>
+
+        <div class="flex justify-center">
+            <textarea placeholder="For eg. Blue Plain Cotton Shirt, Red-black checked shirt, Off-white Polo T-shirt..." id="w3review" name="top" rows="7" cols="70" class="p-3 rounded-2xl mt-3 shadow-lg t-2"></textarea>
+        </div>
+
+        <div class="text-center">
+            <h3 class="suggestions_button ml-4 mt-4 text-[black] font-bold text-2xl">Bottom Wear</h3>
+        </div>
+
+        <div class="flex justify-center">
+            <textarea placeholder="For eg. Navy Blue Plain Cotton Trouser, Grey Denim Jeans ..." id="w3review" name="bottom" rows="7" cols="70" class="p-3 rounded-2xl mt-3 shadow-lg t-2"></textarea>
+        </div>
+
+        <div class="text-center">
+            <h3 class="suggestions_button ml-4 mt-4 text-[black] font-bold text-2xl">Accessories and Shoes</h3>
+        </div>
+
+        <div class="flex justify-center">
+            <textarea placeholder="For eg. Low ankle fabric White Sneakers, Brown Leather Loafers, Brown strapped analog watch, Metallic Chrome finishing wrist band..." id="w3review" name="others" rows="7" cols="70" class="p-3 rounded-2xl mt-3 shadow-lg t-2"></textarea>
+        </div>
+
+        <br>
+        <div class="d-flex justify-center">
+            <button id="nextButton" class="bg-[#cc226c] mr-3 mt-2 ml-5 p-3 rounded-xl text-[#FFFFFF] font-medium"> Update Wardrobe </button>
+            <button class="mt-2 ml-3 rounded-xl bg-[#cc226c] w-36 p-3 text-[white] font-medium" id="back">Return to Home</button>
+        </div>
+    </form>
+    </div>
+
+    <script type="text/javascript" src="https://d1tgh8fmlzexmh.cloudfront.net/ccbp-static-website/js/ccbp-ui-kit.js"></script>
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+</body>
+
+</html>
