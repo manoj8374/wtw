@@ -1,2 +1,2 @@
-# Please Checkout the Live Website under the below Link:
-      [WhatToWear](https://whattowear-m8sp.onrender.com/)
+# Please Checkout the Link Below for Live Website:
+      (https://whattowear-m8sp.onrender.com/)
